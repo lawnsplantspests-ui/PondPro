@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pond Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial;
+      margin: 20px;
+      background: #f4f8f6;
+    }
+    h1 {
+      text-align: center;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .grade {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .A { color: green; }
+    .B { color: #7fbf00; }
+    .C { color: orange; }
+    .D, .F { color: red; }
+  </style>
+</head>
+
+<body>
+
+<h1>Pond Health Dashboard</h1>
+
+<div id="dashboard"></div>
+
+<script>
+const url = "PASTE_YOUR_SCRIPT_URL_HERE";
+
+fetch(url)
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("dashboard");
+
+    data.forEach(row => {
+      const div = document.createElement("div");
+      div.className = "card";
+
+      div.innerHTML = `
+        <h3>${row.pond}</h3>
+        <div class="grade ${row.grade}">Grade: ${row.grade}</div>
+        <p>Score: ${row.score}</p>
+        <p>Date: ${row.date}</p>
+      `;
+
+      container.appendChild(div);
+    });
+  })
+  .catch(err => {
+    document.body.innerHTML += "<p>Error loading data</p>";
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>
